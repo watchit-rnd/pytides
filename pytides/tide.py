@@ -1,5 +1,6 @@
 
-from collections import OrderedDict, Iterable
+from collections import OrderedDict
+from collections.abc import Iterable
 from itertools import takewhile, count
 try:
 	from itertools import izip, ifilter
@@ -9,8 +10,8 @@ except ImportError: #Python3
 from datetime import datetime, timedelta
 import numpy as np
 from scipy.optimize import leastsq, fsolve
-from astro import astro
-import constituent
+from .astro import astro
+from . import constituent
 
 d2r, r2d = np.pi/180.0, 180.0/np.pi
 
@@ -235,7 +236,7 @@ class Tide(object):
 		"""
 		partition = float(partition)
 		relative = hours - hours[0]
-		total_partitions = np.ceil(relative[-1] / partition + 10*np.finfo(np.float).eps).astype('int')
+		total_partitions = np.ceil(relative[-1] / partition + 10*np.finfo(float).eps).astype('int')
 		return [hours[np.floor(np.divide(relative, partition)) == i] for i in range(total_partitions)]
 
 	@staticmethod
